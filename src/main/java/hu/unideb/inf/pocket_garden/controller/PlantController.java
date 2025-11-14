@@ -4,6 +4,7 @@ import hu.unideb.inf.pocket_garden.service.PlantService;
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
+import hu.unideb.inf.pocket_garden.service.dto.response.PlantWaterResDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,20 @@ public class PlantController {
             @PathVariable UUID ownerId
     ) {
         return ResponseEntity.ok(plantService.findByOwnerId(ownerId));
+    }
+
+    @GetMapping("/watering/next/{id}")
+    public ResponseEntity<PlantWaterResDTO> nextWateringDate(
+            @PathVariable UUID id
+    ) {
+        return ResponseEntity.ok(plantService.nextWateringDate(id));
+    }
+
+    @GetMapping("/watering/{id}")
+    public ResponseEntity<PlantWaterResDTO> watering(
+            @PathVariable UUID id
+    ) {
+        return ResponseEntity.ok(plantService.watering(id));
     }
 
     @PutMapping("{id}")

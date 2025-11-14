@@ -11,6 +11,7 @@ import hu.unideb.inf.pocket_garden.service.PlantService;
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
+import hu.unideb.inf.pocket_garden.service.dto.response.PlantWaterResDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +83,32 @@ public class PlantServiceImpl implements PlantService {
             throw new NotFoundException("Owner not found with id: " + ownerId);
         }
         return plantMapper.map(plantRepository.findByOwnerId(ownerId));
+    }
+
+    @Override
+    public PlantWaterResDTO nextWateringDate(UUID id) {
+        if (!plantRepository.existsById(id)) {
+            throw new NotFoundException("Plant not found with id: " + id);
+        }
+
+        return plantMapper
+                .toPlantWateringResponseDTO(
+                        plantRepository.findById(id).get()
+                );
+    }
+
+    @Override
+    public PlantWaterResDTO watering(UUID id) {
+        if (!plantRepository.existsById(id)) {
+            throw new NotFoundException("Plant not found with id: " + id);
+        }
+
+        PlantEntity plantEntity = plantRepository.findById(id).get();
+        plantEntity.setLastWateredAt(LocalDate.now());
+
+        plantRepository.save(plantEntity);
+
+        return plantMapper.toPlantWateringResponseDTO(plantEntity);
     }
 
     @Override

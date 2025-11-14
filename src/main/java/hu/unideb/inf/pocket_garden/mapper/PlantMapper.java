@@ -4,10 +4,8 @@ import hu.unideb.inf.pocket_garden.data.entity.PlantEntity;
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.Mapping;
+import hu.unideb.inf.pocket_garden.service.dto.response.PlantWaterResDTO;
+import org.mapstruct.*;
 
 
 import java.util.List;
@@ -29,5 +27,21 @@ public interface PlantMapper {
             UpdatePlantReqDTO dto,
             @MappingTarget PlantEntity plantEntity
     );
+
+    @Mapping(
+            source = "owner.id",
+            target = "ownerId"
+    )
+    PlantWaterResDTO toPlantWateringResponseDTO(PlantEntity plantEntity);
+
+    @AfterMapping
+    default void calculateNextWateringDate(
+            PlantEntity plant,
+            @MappingTarget PlantWaterResDTO dto
+    ) {
+        dto.setNextWateringDate(
+                plant.getLastWateredAt().plusDays(plant.getWateringFrequency())
+        );
+    }
 
 }

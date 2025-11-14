@@ -5,8 +5,11 @@ import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantWaterResDTO;
-import org.mapstruct.*;
-
+import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.AfterMapping;
 
 import java.util.List;
 

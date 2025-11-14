@@ -2,8 +2,10 @@ package hu.unideb.inf.pocket_garden.mapper;
 
 import hu.unideb.inf.pocket_garden.data.entity.PlantEntity;
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
+import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.Mapping;
 
@@ -22,5 +24,10 @@ public interface PlantMapper {
     PlantEntity toEntity(PlantReqDTO plantReqDTO);
 
     List<PlantResDTO> map(List<PlantEntity> plantEntities);
+
+    void updatePlantEntityFromDTO(
+            UpdatePlantReqDTO dto,
+            @MappingTarget PlantEntity plantEntity
+    );
 
 }

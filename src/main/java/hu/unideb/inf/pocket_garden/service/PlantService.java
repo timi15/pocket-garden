@@ -1,6 +1,7 @@
 package hu.unideb.inf.pocket_garden.service;
 
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
+import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface PlantService {
     List<PlantResDTO> findByOwnerId(UUID ownerId);
 
     PlantResDTO deleteById(UUID id);
+
+    PlantResDTO update(UUID id, UpdatePlantReqDTO updatePlantReqDTO);
 
 }

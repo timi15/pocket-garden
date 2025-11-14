@@ -2,6 +2,7 @@ package hu.unideb.inf.pocket_garden.controller;
 
 import hu.unideb.inf.pocket_garden.service.PlantService;
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
+import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,14 @@ public class PlantController {
             @PathVariable UUID ownerId
     ) {
         return ResponseEntity.ok(plantService.findByOwnerId(ownerId));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<PlantResDTO> update(
+            @PathVariable UUID id,
+            @RequestBody UpdatePlantReqDTO updatePlantReqDTO
+    ) {
+        return ResponseEntity.ok(plantService.update(id, updatePlantReqDTO));
     }
 
 

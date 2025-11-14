@@ -9,6 +9,7 @@ import hu.unideb.inf.pocket_garden.exception.NotFoundException;
 import hu.unideb.inf.pocket_garden.mapper.PlantMapper;
 import hu.unideb.inf.pocket_garden.service.PlantService;
 import hu.unideb.inf.pocket_garden.service.dto.request.PlantReqDTO;
+import hu.unideb.inf.pocket_garden.service.dto.request.UpdatePlantReqDTO;
 import hu.unideb.inf.pocket_garden.service.dto.response.PlantResDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -93,6 +94,19 @@ public class PlantServiceImpl implements PlantService {
         plantRepository.deleteById(id);
 
         return plantMapper.toResponseDTO(plantEntity);
+    }
+
+    @Override
+    public PlantResDTO update(UUID id, UpdatePlantReqDTO updatePlantReqDTO) {
+        if (!plantRepository.existsById(id)) {
+            throw new NotFoundException("Plant not found with id: " + id);
+        }
+
+        PlantEntity existing = plantRepository.findById(id).get();
+        plantMapper.updatePlantEntityFromDTO(updatePlantReqDTO, existing);
+        PlantEntity updated = plantRepository.save(existing);
+
+        return plantMapper.toResponseDTO(updated);
     }
 
 }
